@@ -19,5 +19,16 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-hive" % sparkVersion,
   "mysql" % "mysql-connector-java" % "5.1.6"
 )
+
+// Mongo DB
 libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.5.0"
+
+// Kafka
 libraryDependencies += "org.apache.kafka" %% "kafka" % "2.1.0"
+
+// Akka
+libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-actor" % "2.5.19",
+  "com.typesafe.akka" %% "akka-persistence" % "2.5.19",
+  "com.typesafe.akka" %% "akka-testkit" % "2.5.19" % Test
+)

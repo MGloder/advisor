@@ -9,7 +9,7 @@ object Utilities {
         val entry = line.split("\t")
         val restaurantId = entry(0)
         val restaurantName = entry(1)
-        val features = entry.drop(2)(0)
+        val features = entry(2)
         val f = features.trim().split(" ")
         val city = locationFile.getName().replaceAll(".txt", "")
         Restaurant(restaurantId, restaurantName, f, city)

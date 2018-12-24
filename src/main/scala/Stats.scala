@@ -5,15 +5,17 @@ object Stats {
     val entreeDataPath = args(0)
     val config = DataConfig(entreeDataPath)
     val featuresMap = Utilities.loadFeaturesMap(config.featuresFile)
-    val restaurants = config.locations.flatMap{
-      location =>
+    val restaurants = config.locations.flatMap {
+      location => {
         Utilities.loadLocationData(new File(s"${config.dataPath}/" + location))
+      }
     }
     println("City and their restaurant count")
     println("-" * 50)
 
 
     val grouped = restaurants.groupBy(_.city).map{ case (k, v) => k -> v.size }
+
     val citiesSorted = grouped.keys.toArray.sorted
     citiesSorted foreach { city =>
       val count = grouped(city)
