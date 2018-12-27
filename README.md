@@ -14,7 +14,7 @@
 ​
 get source data
 ```$xslt
-source -> Storming -> HDFS 
+source -> Storming -> Kafka -> HDFS 
 ```
 
 create recommendation model
@@ -27,5 +27,16 @@ calculate invert index table base on recommendation table -> pipeline -> redis -
 ```
 
 ### Build a Recommendation Model with sample data
+
+### Structure
+
+[link](https://www.draw.io/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1#G1ndj902tBhSkbXVQmb-COIyuTNLfoKyVR)
+
+## Service [TODO]
+
+* Persistent/structured data storage
+* A queuing mechanism
+* Search support
+
 
 
