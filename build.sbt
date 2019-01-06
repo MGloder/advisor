@@ -32,3 +32,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-persistence" % "2.5.19",
   "com.typesafe.akka" %% "akka-testkit" % "2.5.19" % Test
 )
+
+// Incompatible Jackson version: 2.9.7
+dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.7"
+
