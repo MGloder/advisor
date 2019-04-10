@@ -32,3 +32,5 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-persistence" % "2.5.19",
   "com.typesafe.akka" %% "akka-testkit" % "2.5.19" % Test
 )
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"

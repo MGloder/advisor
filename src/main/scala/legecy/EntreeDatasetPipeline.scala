@@ -120,90 +120,90 @@ class DBPersistenceActor extends PersistentActor {
   }
 }
 
-class MainActor(config: DataConfig) extends Actor{
-  import Utilities._
-  println("loading Main Actor")
-  val dbPersister: ActorRef = context.actorOf(Props[DBPersistenceActor], "dbPersister")
-//  val messageProducer: ActorRef = context.actorOf(Props[MessageProductorActor], name="messageProducer")
-
-  override def receive: Receive = {
-    case "begin" => {
-      val featuresMap = loadFeaturesMap(config.featuresFile)
-      val restaurants = config.locations.flatMap {
-        location =>
-          loadLocationData(new File(s"${config.dataPath}/" + location))
-      }
-      println(s"Number of restaurants: ${restaurants.size}")
-
-      // store all location to MongoDB
-      for (restaurant: Restaurant <- restaurants) {
-        dbPersister ! restaurant
-      }
-
-      // load session data
-      val sessionFiles = new File(config.sessionPath).list(
-        new FilenameFilter {
-          override def accept(dir: File, name: String): Boolean =
-            name.startsWith("session.")
-        })
-
-      println(sessionFiles.toList)
-
-      for (sf <- sessionFiles){
-        val sessionFile = s"${config.sessionPath}/$sf"
-        println(s"Loading session from: $sessionFile")
-        val sessionData = loadSessionData(sessionFile)
-        println(s"\t\tNumber of recorded sessions: ${sessionData.size}")
-        for (session <- sessionData){
-          dbPersister ! session
-          // messageProducer ! session
-        }
-        Thread.sleep(2 * 1000)
-      }
-    }
-    case "exit" => {
-      println("Exiting now ...")
-      System.exit(0)
-    }
-  }
-}
+//class MainActor(config: DataConfig) extends Actor{
+//  import Utilities._
+//  println("loading Main Actor")
+//  val dbPersister: ActorRef = context.actorOf(Props[DBPersistenceActor], "dbPersister")
+////  val messageProducer: ActorRef = context.actorOf(Props[MessageProductorActor], name="messageProducer")
+//
+//  override def receive: Receive = {
+//    case "begin" => {
+//      val featuresMap = loadFeaturesMap(config.featuresFile)
+//      val restaurants = config.locations.flatMap {
+//        location =>
+//          loadLocationData(new File(s"${config.dataPath}/" + location))
+//      }
+//      println(s"Number of restaurants: ${restaurants.size}")
+//
+//      // store all location to MongoDB
+//      for (restaurant: Restaurant <- restaurants) {
+//        dbPersister ! restaurant
+//      }
+//
+//      // load session data
+//      val sessionFiles = new File(config.sessionPath).list(
+//        new FilenameFilter {
+//          override def accept(dir: File, name: String): Boolean =
+//            name.startsWith("session.")
+//        })
+//
+//      println(sessionFiles.toList)
+//
+//      for (sf <- sessionFiles){
+//        val sessionFile = s"${config.sessionPath}/$sf"
+//        println(s"Loading session from: $sessionFile")
+//        val sessionData = loadSessionData(sessionFile)
+//        println(s"\t\tNumber of recorded sessions: ${sessionData.size}")
+//        for (session <- sessionData){
+//          dbPersister ! session
+//          // messageProducer ! session
+//        }
+//        Thread.sleep(2 * 1000)
+//      }
+//    }
+//    case "exit" => {
+//      println("Exiting now ...")
+//      System.exit(0)
+//    }
+//  }
+//}
 
 //class MessageProduceActor extends Actor{}
 
-object EntreeDatasetPipeline {
-  def main(args: Array[String]): Unit ={
-    val system: ActorSystem = ActorSystem("AdvisorSystem")
-    val entreeDataPath = args(0)
-    val config = DataConfig(entreeDataPath)
-
-//    Database.deleteAll()
-
-    val props = Props(new MainActor(config))
-    val mainActor = system.actorOf(props)
-
-    /*
-     * Pipeline:
-     * 1. Entree Text files -> Database -> Spark Streaming
-     * 2. Entree Text files -> Kafka -> Spark Streaming
-     * 3. Entree Text files -> Spark Streaming
-     * 4. Entree Text files -> Database -> Kafka -> Spark Streaming
-     */
-
-    // start Actor
-    mainActor ! "Begin"
-
-    // logger
-    Logger.getLogger("org").setLevel(Level.INFO)
-    Logger.getLogger("akka").setLevel(Level.INFO)
-
-    // no spark streaming for now, just print to console
-//    val conf = new SparkConf(false).setMaster("local[2]").setAppName("Entree")
-//    val ssc = new StreamingContext(conf, Seconds(2))
+//object EntreeDatasetPipeline {
+//  def main(args: Array[String]): Unit ={
+//    val system: ActorSystem = ActorSystem("AdvisorSystem")
+//    val entreeDataPath = args(0)
+//    val config = DataConfig(entreeDataPath)
 //
-//    val receiver = new SessionDataReceiver()
-//    val sessionDataStream = ssc.receiverStream(receiver)
-    Thread.sleep(10000)
-    system.terminate()
-
-  }
-}
+////    Database.deleteAll()
+//
+//    val props = Props(new MainActor(config))
+//    val mainActor = system.actorOf(props)
+//
+//    /*
+//     * Pipeline:
+//     * 1. Entree Text files -> Database -> Spark Streaming
+//     * 2. Entree Text files -> Kafka -> Spark Streaming
+//     * 3. Entree Text files -> Spark Streaming
+//     * 4. Entree Text files -> Database -> Kafka -> Spark Streaming
+//     */
+//
+//    // start Actor
+//    mainActor ! "Begin"
+//
+//    // logger
+//    Logger.getLogger("org").setLevel(Level.INFO)
+//    Logger.getLogger("akka").setLevel(Level.INFO)
+//
+//    // no spark streaming for now, just print to console
+////    val conf = new SparkConf(false).setMaster("local[2]").setAppName("Entree")
+////    val ssc = new StreamingContext(conf, Seconds(2))
+////
+////    val receiver = new SessionDataReceiver()
+////    val sessionDataStream = ssc.receiverStream(receiver)
+//    Thread.sleep(10000)
+//    system.terminate()
+//
+//  }
+//}
