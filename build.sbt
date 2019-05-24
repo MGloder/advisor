@@ -2,7 +2,7 @@ name := "Advisor"
 
 version := "0.1"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.0"
 
 val sparkVersion = "2.3.0"
 
@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-mllib" % sparkVersion,
   "org.apache.spark" %% "spark-streaming" % sparkVersion,
   "org.apache.spark" %% "spark-hive" % sparkVersion,
+  "org.apache.spark" %% "spark-yarn" % sparkVersion,
   "mysql" % "mysql-connector-java" % "5.1.6"
 )
 
