@@ -3,3 +3,5 @@
 /target
 /.idea
 /project
+src/main/resources/
+metastore_db/
