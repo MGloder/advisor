@@ -1,4 +1,4 @@
-package com.wonderland.model
+package com.wonderland.trail.model
 
 class Prototype(input: Array[String]){
   private val count = input.size

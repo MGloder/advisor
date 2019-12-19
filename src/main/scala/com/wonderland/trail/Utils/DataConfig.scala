@@ -1,4 +1,4 @@
-package com.wonderland.Utils
+package com.wonderland.trail.Utils
 
 trait Constants {
   val ControlUnit = Array(
