@@ -21,7 +21,7 @@ object Source {
     StructField("lastName", StringType, true),
     StructField("gender", StringType, true),
     StructField("nickName", StringType, true),
-    StructField("dateOfBirth", DateType, true),
+    StructField("dateOfBirth", DateType , true),
     StructField("ssn", StringType, true)
   ))
 
